@@ -1,10 +1,9 @@
 import type { HAEntity } from '../types';
 
 export function parseHaOutput(rawText: string, cameraEntityId: string): HAEntity[] {
-  const entities: HAEntity[] = [];
+  const entities: HAEntity[] = []; // <-- This line is now fixed
   const lines = rawText.split('\n');
 
-  // Updated Regex to capture state for cameras
   const entityIdRegex = /-\s*`((?:switch|select|number|sensor|camera)\.[^`]+)`(?:\s*—\s*state:\s*\*\*(.+?)\*\*|.*)/;
   const optionsRegex = /-\s*\*\*Options:\*\*\s*`(.+?)`/;
   const minRegex = /-\s*\*\*Min:\*\*\s*`(.+?)`/;
@@ -23,8 +22,9 @@ export function parseHaOutput(rawText: string, cameraEntityId: string): HAEntity
       }
 
       const id = entityMatch[1];
-      const state = entityMatch[2]; // Will be undefined for entities without a state in the template
+      const state = entityMatch[2];
       const type = id.split('.')[0] as HAEntity['type'];
+      
       const nameSuffix = id.replace(`${type}.${cameraEntityId}_`, '');
 
       lastEntity = {
@@ -35,7 +35,6 @@ export function parseHaOutput(rawText: string, cameraEntityId: string): HAEntity
         selected: true,
       };
       
-      // Add state to attributes if it exists
       if (state && lastEntity.attributes) {
         lastEntity.attributes.state = state;
       }

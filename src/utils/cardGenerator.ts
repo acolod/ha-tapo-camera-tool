@@ -13,41 +13,43 @@ const CATEGORIES = [
 ];
 
 export function generateLovelaceYaml(entities: HAEntity[], friendlyName: string, entityId: string): string {
-  const selectedEntities = entities.filter(e => e.selected);
+  // --- THIS LINE IS NOW FIXED to ignore sensor/camera entities ---
+  const selectedEntities = entities.filter(e => e.selected && (e.type === 'switch' || e.type === 'number' || e.type === 'select'));
   const baseName = entityId;
 
   const buildEntitiesForMode = (mode: 'home' | 'away'): string => {
-    let categoryYaml = '';
+    let categoryString = '';
     const unmappedEntities: HAEntity[] = [...selectedEntities];
 
     CATEGORIES.forEach(category => {
-      const categoryEntities = selectedEntities.filter(e => 
+      // --- THIS LOGIC IS NOW FIXED to prevent duplicates ---
+      const categoryEntities = unmappedEntities.filter(e => 
         category.keywords.some(keyword => e.nameSuffix.toLowerCase().includes(keyword))
       );
 
       if (categoryEntities.length > 0) {
-        categoryYaml += `      - type: section\n        label: ${category.name}\n`;
+        categoryString += `- type: section\n  label: ${category.name}\n`;
         categoryEntities.forEach(e => {
           const helperType = e.type === 'switch' ? 'input_boolean' : e.type === 'number' ? 'input_number' : 'input_select';
-          categoryYaml += `      - entity: ${helperType}.${baseName}_${mode}_${e.nameSuffix}\n`;
+          categoryString += `- entity: ${helperType}.${baseName}_${mode}_${e.nameSuffix}\n`;
           
-          // Remove mapped entities to find unmapped ones later
+          // Remove the entity from the unmapped list so it can't be used again
           const index = unmappedEntities.findIndex(um => um.id === e.id);
           if (index > -1) unmappedEntities.splice(index, 1);
         });
       }
     });
 
-    // Add any entities that didn't fit a defined category
     if (unmappedEntities.length > 0) {
-      categoryYaml += `      - type: section\n        label: Other\n`;
+      categoryString += `- type: section\n  label: Other\n`;
       unmappedEntities.forEach(e => {
         const helperType = e.type === 'switch' ? 'input_boolean' : e.type === 'number' ? 'input_number' : 'input_select';
-        categoryYaml += `      - entity: ${helperType}.${baseName}_${mode}_${e.nameSuffix}\n`;
+        categoryString += `- entity: ${helperType}.${baseName}_${mode}_${e.nameSuffix}\n`;
       });
     }
 
-    return categoryYaml.trim();
+    // Add the correct indentation (6 spaces) to every line before returning.
+    return categoryString.trim().split('\n').map(line => `      ${line}`).join('\n');
   };
 
   const homeEntities = buildEntitiesForMode('home');

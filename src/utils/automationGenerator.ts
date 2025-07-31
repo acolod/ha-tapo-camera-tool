@@ -1,8 +1,18 @@
 import type { HAEntity } from '../types';
 
 export function generateAutomationYaml(entities: HAEntity[], friendlyName: string, entityId: string): string {
+  // NOTE: We use the FULL entity list here, not just the selected ones, to find the best status entity.
+  const allEntities = entities; 
   const selectedEntities = entities.filter(e => e.selected && (e.type === 'switch' || e.type === 'select' || e.type === 'number'));
   const baseName = entityId;
+
+  // --- THIS IS THE FIX ---
+  // Intelligently find the best entity to use for the online check.
+  // Prefer the battery sensor if it exists, otherwise fall back to a camera stream entity.
+  let onlineCheckEntity = allEntities.find(e => e.id === `sensor.${baseName}_battery`);
+  if (!onlineCheckEntity) {
+    onlineCheckEntity = allEntities.find(e => e.type === 'camera');
+  }
 
   let sequence = '';
 
@@ -11,7 +21,6 @@ export function generateAutomationYaml(entities: HAEntity[], friendlyName: strin
     
     switch(e.type) {
       case 'switch':
-        // --- THIS BLOCK IS NOW FIXED to use the safer is_state() template ---
         sequence += `
               - if:
                   - condition: template
@@ -65,7 +74,7 @@ action:
   - choose:
       - conditions:
           - condition: template
-            value_template: "{{ states('sensor.${baseName}_battery') not in ['unknown','unavailable'] }}"
+            value_template: "{{ states('${onlineCheckEntity ? onlineCheckEntity.id : 'sun.sun'}') not in ['unknown','unavailable'] }}"
         sequence:
 ${sequence}
 mode: restart

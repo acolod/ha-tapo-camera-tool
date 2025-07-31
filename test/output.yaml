@@ -1,0 +1,113 @@
+type: entities
+title: Driveway Cam A Settings
+state_color: true
+entities:
+  - type: custom:fold-entity-row
+    head:
+      type: section
+      label: Home Settings
+    padding: 20
+    entities:
+- type: section
+        label: General & Privacy
+      - entity: input_boolean.driveway_cam_a_c402_home_privacy
+      - entity: input_boolean.driveway_cam_a_c402_home_indicator_led
+      - entity: input_boolean.driveway_cam_a_c402_home_privacy_zones
+      - type: section
+        label: Notifications
+      - entity: input_boolean.driveway_cam_a_c402_home_notifications
+      - entity: input_boolean.driveway_cam_a_c402_home_rich_notifications
+      - type: section
+        label: Recording & Audio
+      - entity: input_number.driveway_cam_a_c402_home_microphone_volume
+      - entity: input_number.driveway_cam_a_c402_home_speaker_volume
+      - entity: input_boolean.driveway_cam_a_c402_home_record_audio
+      - entity: input_boolean.driveway_cam_a_c402_home_record_to_sd_card
+      - entity: input_boolean.driveway_cam_a_c402_home_microphone_mute
+      - entity: input_boolean.driveway_cam_a_c402_home_microphone_noise_cancellation
+      - type: section
+        label: Detection Settings
+      - entity: input_select.driveway_cam_a_c402_home_motion_detection
+      - entity: input_select.driveway_cam_a_c402_home_person_detection
+      - entity: input_select.driveway_cam_a_c402_home_vehicle_detection
+      - entity: input_select.driveway_cam_a_c402_home_pet_detection
+      - entity: input_number.driveway_cam_a_c402_home_motion_detection_digital_sensitivity
+      - entity: input_boolean.driveway_cam_a_c402_home_trigger_alarm_on_motion_detection
+      - entity: input_boolean.driveway_cam_a_c402_home_trigger_alarm_on_people_detection
+      - entity: input_boolean.driveway_cam_a_c402_home_trigger_alarm_on_pet_detection
+      - entity: input_boolean.driveway_cam_a_c402_home_trigger_alarm_on_vehicle_detection
+      - type: section
+        label: Vision & Alarm
+      - entity: input_select.driveway_cam_a_c402_home_night_vision_switching
+      - entity: input_select.driveway_cam_a_c402_home_night_vision
+      - entity: input_select.driveway_cam_a_c402_home_automatic_alarm
+      - entity: input_boolean.driveway_cam_a_c402_home_trigger_alarm_on_motion_detection
+      - entity: input_boolean.driveway_cam_a_c402_home_trigger_alarm_on_people_detection
+      - entity: input_boolean.driveway_cam_a_c402_home_trigger_alarm_on_pet_detection
+      - entity: input_boolean.driveway_cam_a_c402_home_trigger_alarm_on_vehicle_detection
+      - type: section
+        label: Siren
+      - entity: input_select.driveway_cam_a_c402_home_siren_type
+      - entity: input_number.driveway_cam_a_c402_home_siren_volume
+      - entity: input_number.driveway_cam_a_c402_home_siren_duration
+      - type: section
+        label: Spotlight
+      - entity: input_select.driveway_cam_a_c402_home_spotlight_on_off_for
+      - entity: input_number.driveway_cam_a_c402_home_spotlight_intensity
+  - type: custom:button-card
+    color_type: blank-card
+    styles:
+      card:
+        - height: 3px
+  - type: custom:fold-entity-row
+    head:
+      type: section
+      label: Away Settings
+    padding: 20
+    entities:
+- type: section
+        label: General & Privacy
+      - entity: input_boolean.driveway_cam_a_c402_away_privacy
+      - entity: input_boolean.driveway_cam_a_c402_away_indicator_led
+      - entity: input_boolean.driveway_cam_a_c402_away_privacy_zones
+      - type: section
+        label: Notifications
+      - entity: input_boolean.driveway_cam_a_c402_away_notifications
+      - entity: input_boolean.driveway_cam_a_c402_away_rich_notifications
+      - type: section
+        label: Recording & Audio
+      - entity: input_number.driveway_cam_a_c402_away_microphone_volume
+      - entity: input_number.driveway_cam_a_c402_away_speaker_volume
+      - entity: input_boolean.driveway_cam_a_c402_away_record_audio
+      - entity: input_boolean.driveway_cam_a_c402_away_record_to_sd_card
+      - entity: input_boolean.driveway_cam_a_c402_away_microphone_mute
+      - entity: input_boolean.driveway_cam_a_c402_away_microphone_noise_cancellation
+      - type: section
+        label: Detection Settings
+      - entity: input_select.driveway_cam_a_c402_away_motion_detection
+      - entity: input_select.driveway_cam_a_c402_away_person_detection
+      - entity: input_select.driveway_cam_a_c402_away_vehicle_detection
+      - entity: input_select.driveway_cam_a_c402_away_pet_detection
+      - entity: input_number.driveway_cam_a_c402_away_motion_detection_digital_sensitivity
+      - entity: input_boolean.driveway_cam_a_c402_away_trigger_alarm_on_motion_detection
+      - entity: input_boolean.driveway_cam_a_c402_away_trigger_alarm_on_people_detection
+      - entity: input_boolean.driveway_cam_a_c402_away_trigger_alarm_on_pet_detection
+      - entity: input_boolean.driveway_cam_a_c402_away_trigger_alarm_on_vehicle_detection
+      - type: section
+        label: Vision & Alarm
+      - entity: input_select.driveway_cam_a_c402_away_night_vision_switching
+      - entity: input_select.driveway_cam_a_c402_away_night_vision
+      - entity: input_select.driveway_cam_a_c402_away_automatic_alarm
+      - entity: input_boolean.driveway_cam_a_c402_away_trigger_alarm_on_motion_detection
+      - entity: input_boolean.driveway_cam_a_c402_away_trigger_alarm_on_people_detection
+      - entity: input_boolean.driveway_cam_a_c402_away_trigger_alarm_on_pet_detection
+      - entity: input_boolean.driveway_cam_a_c402_away_trigger_alarm_on_vehicle_detection
+      - type: section
+        label: Siren
+      - entity: input_select.driveway_cam_a_c402_away_siren_type
+      - entity: input_number.driveway_cam_a_c402_away_siren_volume
+      - entity: input_number.driveway_cam_a_c402_away_siren_duration
+      - type: section
+        label: Spotlight
+      - entity: input_select.driveway_cam_a_c402_away_spotlight_on_off_for
+      - entity: input_number.driveway_cam_a_c402_away_spotlight_intensity
