@@ -55,32 +55,36 @@ The entire system relies on a central helper entity that defines your home's cur
     * **Option 2:** `Away`
 4.  Click **Create**. This will create the `input_select.security_mode` entity that the generated automation will use.
 
+Here is an example of a selector card uding the helper, to allow manual selection of Security Mode State (Home or Away):
+
+![Screenshot of the Input Select helper configuration in Home Assistant](img/security-mode-helper.png)
+
 ## How to Use the Tool
 
 ### Step 1: Download and Run the Tool
 
-1.  Go to the **Releases** page of this GitHub repository.
-2.  Download the latest `.zip` file (e.g., `ha-tapo-camera-tool-v1.0.0.zip`).
-3.  Unzip the folder to a location on your computer.
-4.  Open the unzipped folder and double-click the `index.html` file to open the tool in your browser.
+1.  Download the asset `.zip` file from the latest release: [![Latest Release](https://img.shields.io/github/v/release/acolod/ha-tapo-camera-tool)](https://github.com/acolod/ha-tapo-camera-tool/releases/latest)
+2.  Unzip the folder to a location on your computer.
+3.  Open the unzipped folder and double-click the `index.html` file to open the tool in your browser.
 
 ### Step 2: Get Camera Entities from Home Assistant
 
 1.  In the tool, enter a **Camera Friendly Name** (e.g., `Driveway Cam A`) and the **Camera Base Entity ID** (e.g., `driveway_cam_a_c402`).
-2.  Click the **"Show Jinja2 Template for HA"** button. The tool will generate a template for you.
+2.  Click the **"Show Jinja2 Template for HA"** button.
 3.  Copy the entire Jinja2 template.
 4.  In Home Assistant, go to **Developer Tools > Template**.
-5.  Delete any existing content in the template editor and paste the template you copied from the tool.
-6.  A formatted list of all your camera's entities will appear on the right side. Copy this entire result.
+5.  Paste the template and copy the entire result from the right side.
 
 ### Step 3: Generate the Configuration Files
 
 1.  Return to the tool and paste the entity list you just copied from Home Assistant into the large text area.
 2.  Click the **"Process Entities"** button.
-3.  A new section will appear, listing all your camera's entities, grouped by type. Review this list:
-    * **Uncheck** any entities you do not want to control with this system.
-    * **Drag and drop** entities to change their order on the final Lovelace card.
+3.  A new section will appear, listing all your camera's entities, grouped by type. Review this list, unchecking any entities you don't need and reordering them via drag-and-drop.
 4.  Once you are happy with the list, click the **"Generate All Files"** button. The tool will instantly generate the three required YAML configuration files.
+
+| Tool Interface (Input & Entity List) | Generated YAML Output |
+| :---: | :---: |
+| ![Screenshot of the main tool interface showing the entity list](img/tool-interface-1.png) | ![Screenshot of the main tool interface showing the generated entities list](img/tool-interface-2.png) |
 
 ## Deployment in Home Assistant
 
@@ -90,7 +94,7 @@ The entire system relies on a central helper entity that defines your home's cur
 2.  In your Home Assistant `/config` directory, find or create a folder named `packages`.
 3.  Create a new file inside `packages`, named after your camera (e.g., `camera_driveway_a.yaml`).
 4.  Paste the copied YAML into this new file.
-5.  Ensure your main `configuration.yaml` is set up to load packages. It should contain:
+5.  Ensure your main `configuration.yaml` is set up to load packages:
     ```yaml
     homeassistant:
       packages: !include_dir_named packages
@@ -102,6 +106,10 @@ The entire system relies on a central helper entity that defines your home's cur
 1.  After HA has restarted, copy the contents of the **"Lovelace Settings Card"** output box.
 2.  Navigate to the dashboard where you want the card, enter **Edit Dashboard** mode, and click **+ Add Card**.
 3.  Choose the **Manual** card, delete the placeholder content, and paste the copied YAML. Save the card.
+
+| Settings Card | Setting Card (Away Expanded) |
+| :---: | :---: |
+|![Screenshot of the final Lovelace Settings Card](img/lovelace-card-1.png)|![Screenshot of the final Lovelace Settings Card showing Away options expanded](img/lovelace-card-2.png)|
 
 ### 3. The Automation
 
